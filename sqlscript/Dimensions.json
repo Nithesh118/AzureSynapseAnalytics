@@ -1,0 +1,17 @@
+{
+	"name": "Dimensions",
+	"properties": {
+		"content": {
+			"query": "-- DimCustomer\nif not EXISTS (SELECT * from sys.tables t join sys.schemas s on t.schema_id = s.schema_id\nwhere t.name = 'DimCustomer' and s.name = 'gold')\nCREATE EXTERNAL table gold.DimCustomer\nwith \n(\n    LOCATION = 'DimCustomer',\n    DATA_SOURCE = gold_source,\n    FILE_FORMAT = parquet_format\n)\nas \n   \nselect *,  ROW_NUMBER() OVER (ORDER BY t.CustomerID) as DimCustomerKey\nfrom (\nSELECT \n    DISTINCT  \n    CustomerID,\n    CustomerName,\n    CustomerEmail\n    FROM silver.silverTable\n    ) as t\n\n-- DimProducts\nif not EXISTS (SELECT * from sys.tables t join sys.schemas s on t.schema_id = s.schema_id\nwhere t.name = 'DimProduct' and s.name = 'gold')\nCREATE EXTERNAL table gold.DimProduct\nwith \n(\n    LOCATION = 'DimProduct',\n    DATA_SOURCE = gold_source,\n    FILE_FORMAT = parquet_format\n)\nas \n\nSELECT *,     ROW_NUMBER() OVER (ORDER BY t.ProductID) as DimProductKey\nfrom (\nSELECT \n    DISTINCT  \n    ProductID,\n    ProductName,\n    ProductCategory\n    FROM silver.silverTable\n    ) t\n\n-- DimGeography\nif not EXISTS (SELECT * from sys.tables t join sys.schemas s on t.schema_id = s.schema_id\nwhere t.name = 'DimGeography' and s.name = 'gold')\nCREATE EXTERNAL table gold.DimGeography\nwith \n(\n    LOCATION = 'DimGeography',\n    DATA_SOURCE = gold_source,\n    FILE_FORMAT = parquet_format\n)\nas \nSELECT *, ROW_NUMBER() OVER (ORDER BY t.RegionID) as DimGeographyKey\nfrom (\nSELECT \n    DISTINCT  \n    RegionID,\n    Country\n    FROM silver.silverTable\n    ) t\n\n\n-- DimOrders\nif not EXISTS (SELECT * from sys.tables t join sys.schemas s on t.schema_id = s.schema_id\nwhere t.name = 'DimOrders' and s.name = 'gold')\nCREATE EXTERNAL table gold.DimOrders\nwith \n(\n    LOCATION = 'DimOrders',\n    DATA_SOURCE = gold_source,\n    FILE_FORMAT = parquet_format\n)\nas \nSELECT \n    OrderID,\n    CustomerID,\n    CustomerEmail,\n    CustomerName,\n    ProductID, ProductName,\n    ProductCategory,\n    RegionID,\n    Country,\n    ROW_NUMBER() OVER (ORDER BY OrderID) as DimOrderKey\n    FROM silver.silverTable\n",
+			"metadata": {
+				"language": "sql"
+			},
+			"currentConnection": {
+				"databaseName": "SalesDWH",
+				"poolName": "Built-in"
+			},
+			"resultLimit": 5000
+		},
+		"type": "SqlQuery"
+	}
+}

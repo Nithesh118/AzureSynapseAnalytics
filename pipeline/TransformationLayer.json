@@ -1,0 +1,67 @@
+{
+	"name": "TransformationLayer",
+	"properties": {
+		"activities": [
+			{
+				"name": "Data flow1",
+				"type": "ExecuteDataFlow",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"dataflow": {
+						"referenceName": "source bronze",
+						"type": "DataFlowReference"
+					},
+					"compute": {
+						"coreCount": 8,
+						"computeType": "General"
+					},
+					"traceLevel": "Fine"
+				}
+			},
+			{
+				"name": "silverTable",
+				"type": "Script",
+				"dependsOn": [
+					{
+						"activity": "Data flow1",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"linkedServiceName": {
+					"referenceName": "ls_serverless",
+					"type": "LinkedServiceReference"
+				},
+				"typeProperties": {
+					"scripts": [
+						{
+							"type": "Query",
+							"text": "\nif NOT EXISTS (SELECT * FROM sys.tables t JOIN sys.schemas s on t.schema_id = s.schema_id where t.name = 'silverTable'\nand s.name = 'silver')\n    CREATE EXTERNAL TABLE silver.silverTable\n    (\n        OrderID VARCHAR(100),\n        OrderDate DATE,\n        CustomerID VARCHAR(100),\n        CustomerName VARCHAR(100),\n        CustomerEmail VARCHAR(100),\n        ProductID VARCHAR(100),\n        ProductName VARCHAR(100),\n        ProductCategory VARCHAR(100),\n        RegionID VARCHAR(100),\n        Country VARCHAR(100),\n        Quantity VARCHAR(100),\n        UnitPrice INT,\n        TotalAmount INT\n    )\n    with (\n        LOCATION = 'enrichedSales',\n        DATA_SOURCE = silver_source,\n        FILE_FORMAT = parquet_format\n    )\n\n\n"
+						}
+					],
+					"scriptBlockExecutionTimeout": "02:00:00"
+				}
+			}
+		],
+		"annotations": [],
+		"lastPublishTime": "2026-03-27T06:19:31Z"
+	},
+	"type": "Microsoft.Synapse/workspaces/pipelines"
+}

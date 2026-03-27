@@ -1,0 +1,17 @@
+{
+	"name": "Ext_Resources",
+	"properties": {
+		"content": {
+			"query": "-- Database scoped credenial\ncreate  DATABASE scoped CREDENTIAL nith_creds\nwith IDENTITY = 'Managed Identity'\n\n\n-- External DATA Source\nCREATE EXTERNAL DATA SOURCE silver_source\nwith (\n    LOCATION = 'https://azuredwhlake100.dfs.core.windows.net/silver/',\n    CREDENTIAL = nith_creds\n)\n\nCREATE EXTERNAL DATA SOURCE gold_source\nwith (\n    LOCATION = 'https://azuredwhlake100.dfs.core.windows.net/gold/',\n    CREDENTIAL = nith_creds\n)\n\n-- External File Format\nCREATE EXTERNAL file FORMAT parquet_format\nwith (\n    FORMAT_TYPE = PARQUET,\n    DATA_COMPRESSION = 'org.apache.hadoop.io.compress.SnappyCodec'\n)\n\nCREATE EXTERNAL file FORMAT delta_format\nwith (\n    FORMAT_TYPE = DELTA\n)\n",
+			"metadata": {
+				"language": "sql"
+			},
+			"currentConnection": {
+				"databaseName": "SalesDWH",
+				"poolName": "Built-in"
+			},
+			"resultLimit": 5000
+		},
+		"type": "SqlQuery"
+	}
+}
