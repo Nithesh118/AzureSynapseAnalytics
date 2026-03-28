@@ -74,7 +74,7 @@ Data Sources → Azure Synapse Pipelines → ADLS Gen2 (Bronze) → Transformati
 - 🔸 Add monitoring and logging for pipelines
 - 🔸 Optimize performance for large-scale datasets
 
----
+
 
 ## 📌 How to Run
 
@@ -87,3 +87,11 @@ Data Sources → Azure Synapse Pipelines → ADLS Gen2 (Bronze) → Transformati
 ---
 
 ## 📎 Repository Structure
+
+
+---<img width="1919" height="808" alt="Screenshot 2026-03-27 194101" src="https://github.com/user-attachments/assets/cfa105dd-fd4d-4f15-ba31-6e4a5601e690" />
+<img width="1910" height="874" alt="Screenshot 2026-03-27 194142" src="https://github.com/user-attachments/assets/002ce826-e34b-49c2-a82b-4c2d4d767a74" />
+<img width="1919" height="884" alt="Screenshot 2026-03-27 194244" src="https://github.com/user-attachments/assets/a0e39f2d-b2de-4fa8-a5c6-f3fa3b9fa8c4" />
+<img width="1904" height="882" alt="Screenshot 2026-03-27 194336" src="https://github.com/user-attachments/assets/2c4a0638-3b75-474d-9be9-dbef51019347" /><img width="1918" height="889" alt="Screenshot 2026-03-27 194457" src="https://github.com/user-attachments/assets/8a1ffa72-3d29-4032-882a-c96dcaeae004" />
+
+<img width="1917" height="885" alt="Screenshot 2026-03-27 194616" src="https://github.com/user-attachments/assets/ed139c5b-24b7-4664-b1bb-2245d985f462" />
