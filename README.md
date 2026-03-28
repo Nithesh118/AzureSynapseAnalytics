@@ -6,6 +6,12 @@ This project demonstrates the design and implementation of an end-to-end data en
 The solution simulates a real-world data platform where raw data is ingested, transformed, and served for analytics.
 
 ---
+## 🚀 Project Highlights
+
+- Processed large datasets (~1M+ records simulated) using Azure Synapse pipelines
+- Implemented Medallion Architecture to improve data quality and query performance
+- Designed Star Schema enabling efficient analytical queries
+- Built scalable data pipelines with modular design and transformation layers
 
 ## 🏗️ Architecture
 
@@ -85,6 +91,12 @@ Data Sources → Azure Synapse Pipelines → ADLS Gen2 (Bronze) → Transformati
 5. Execute pipelines and validate outputs
 
 ---
+
+## ⚙️ Challenges & Solutions
+
+- Handling raw inconsistent data → solved using data cleaning in Silver layer
+- Designing efficient schema → implemented Star Schema for analytics
+- Managing transformations → used Data Flows for scalable processing
 
 ## 📎 Repository Structure
 
